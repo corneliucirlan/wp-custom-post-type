@@ -109,11 +109,11 @@
 	    public $columns;
 
 	    /**
-	     * User defined functions to populate admin columns.
+	     * User defined public functions to populate admin columns.
 	     *
 	     * @since  1.0
 	     * 
-	     * @var array $custom_populate_columns User functions to populate columns.
+	     * @var array $custom_populate_columns User public functions to populate columns.
 	     */
 	    public $custom_populate_columns;
 
@@ -145,7 +145,7 @@
 	     * @param mixed $postTypeNames The name(s) of the post type, accepts (post type name, slug, plural, singular).
 	     * @param array $options User submitted options.
 	     */
-	    function __construct($postTypeNames, $options = array())
+	    public function __construct($postTypeNames, $options = array())
 	    {
 			// Check if post type names is a string or an array.
 	        if (is_array($postTypeNames)):
@@ -228,14 +228,14 @@
 	    /**
 	     * Get
 	     *
-	     * Helper function to get an object variable.
+	     * Helper public function to get an object variable.
 	     *
 	     * @since  1.0
 	     * 
 	     * @param string $var The variable you would like to retrieve.
 	     * @return mixed Returns the value on success, boolean false whe it fails.
 	     */
-	    function get($var)
+	    public function get($var)
 	    {
 			// If the variable exists.
 			if ($this->$var)
@@ -252,7 +252,7 @@
 	    /**
 	     * Set
 	     *
-	     * Helper function used to set an object variable. Can overwrite existsing
+	     * Helper public function used to set an object variable. Can overwrite existsing
 	     * variables or create new ones. Cannot overwrite reserved variables.
 	     *
 	     * @since  1.0
@@ -260,7 +260,7 @@
 	     * @param mixed $var The variable you would like to create/overwrite.
 	     * @param mixed $value The value you would like to set to the variable.
 	     */
-	    function set($var, $value)
+	    public function set($var, $value)
 	    {
 			// An array of reserved variables that cannot be overwritten.
 			$reserved = array(
@@ -283,18 +283,18 @@
 	    /**
 	     * Add Action
 	     *
-	     * Helper function to add add_action WordPress filters.
+	     * Helper public function to add add_action WordPress filters.
 	     *
 	     * @since  1.0
 	     * 
 	     * @param string $action Name of the action.
-	     * @param string $function Function to hook that will run on action.
-	     * @param integet $priority Order in which to execute the function, relation to other functions hooked to this action.
-	     * @param integer $accepted_args The number of arguments the function accepts.
+	     * @param string $function public function to hook that will run on action.
+	     * @param integet $priority Order in which to execute the public function, relation to other public functions hooked to this action.
+	     * @param integer $accepted_args The number of arguments the public function accepts.
 	     */
-		function add_action($action, $function, $priority = 10, $accepted_args = 1)
+		public function add_action($action, $function, $priority = 10, $accepted_args = 1)
 		{
-			// Pass variables into WordPress add_action function
+			// Pass variables into WordPress add_action public function
 			add_action($action, $function, $priority, $accepted_args);
 		}
 
@@ -303,18 +303,18 @@
 	     *
 	     * Create add_filter WordPress filter.
 	     *
-	     * @see http://codex.wordpress.org/Function_Reference/add_filter
+	     * @see http://codex.wordpress.org/public function_Reference/add_filter
 	     * 
 	     * @since  1.0
 	     *
 	     * @param  string  $action           Name of the action to hook to, e.g 'init'.
-	     * @param  string  $function         Function to hook that will run on @action.
-	     * @param  int     $priority         Order in which to execute the function, relation to other function hooked to this action.
-	     * @param  int     $accepted_args    The number of arguements the function accepts.
+	     * @param  string  $function         public function to hook that will run on @action.
+	     * @param  int     $priority         Order in which to execute the public function, relation to other public function hooked to this action.
+	     * @param  int     $accepted_args    The number of arguements the public function accepts.
 	     */
-	    function add_filter($action, $function, $priority = 10, $accepted_args = 1)
+	    public function add_filter($action, $function, $priority = 10, $accepted_args = 1)
 	    {
-			// Pass variables into Wordpress add_action function
+			// Pass variables into Wordpress add_action public function
 			add_filter($action, $function, $priority, $accepted_args);
 	    }
 
@@ -328,7 +328,7 @@
 	     * @param  string $name Name to slugify.
 	     * @return string $name Returns the slug.
 	     */
-	    function get_slug($name = null)
+	    public function get_slug($name = null)
 	    {
 	        // If no name set use the post type name.
 	        if (!isset($name))
@@ -360,7 +360,7 @@
 	     * @param  string $name The slug name you want to pluralize.
 	     * @return string the friendly pluralized name.
 	     */
-	    function get_plural($name = null)
+	    public function get_plural($name = null)
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
@@ -384,7 +384,7 @@
 	     * @param string $name The slug name you want to unpluralize.
 	     * @return string The friendly singular name.
 	     */
-	    function get_singular($name = null)
+	    public function get_singular($name = null)
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
@@ -408,7 +408,7 @@
 	     * @param string $name The name you want to make friendly.
 	     * @return string The human friendly name.
 	     */
-	    function get_human_friendly($name = null)
+	    public function get_human_friendly($name = null)
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
@@ -421,11 +421,11 @@
 	    /**
 	     * Register Post Type
 	     *
-	     * @see http://codex.wordpress.org/Function_Reference/register_post_type
+	     * @see http://codex.wordpress.org/public function_Reference/register_post_type
 	     * 
 	     * @since  1.0
 	     */
-	    function register_post_type()
+	    public function register_post_type()
 	    {
 	        // Friendly post type names.
 	        $plural   = $this->plural;
@@ -446,7 +446,7 @@
 	            'search_items'       => sprintf(__('Search %s', $this->textdomain), $plural),
 	            'not_found'          => sprintf(__('No %s found', $this->textdomain), $plural),
 	            'not_found_in_trash' => sprintf(__('No %s found in Trash', $this->textdomain), $plural),
-	            'parent_item_colon'  => sprintf(__('Parent %s:', $this->textdomain), $singula)
+	            'parent_item_colon'  => sprintf(__('Parent %s:', $this->textdomain), $singular)
 	        );
 
 
@@ -480,7 +480,7 @@
 	     *
 	     * @since  1.0
 	     */
-	    function dashboad_glance()
+	    public function dashboad_glance()
 	    {
 	    	// get number of published posts
 	    	$numberOfPosts = number_format_i18n(wp_count_posts($this->postTypeName)->publish);
@@ -492,14 +492,14 @@
 	    /**
 	     * Register taxonomy
 	     *
-	     * @see http://codex.wordpress.org/Function_Reference/register_taxonomy
+	     * @see http://codex.wordpress.org/public function_Reference/register_taxonomy
 	     *
 	     * @since  1.0
 	     * 
 	     * @param string $taxonomy_name The slug for the taxonomy.
 	     * @param array  $options Taxonomy options.
 	     */
-	    function register_taxonomy($taxonomy_names, $options = array())
+	    public function register_taxonomy($taxonomy_names, $options = array())
 	    {
 	        // Post type defaults to $this post type if unspecified.
 	        $post_type = $this->postTypeName;
@@ -529,7 +529,7 @@
 		                    // Else generate the name.
 		                	else:
 
-			                    // Define the function to be used.
+			                    // Define the public function to be used.
 			                    $method = 'get_' . $name;
 
 			                    // Generate the name
@@ -596,7 +596,7 @@
 	     *
 	     * @since  1.0
 	     */
-	    function register_taxonomies()
+	    public function register_taxonomies()
 	    {
 	        if (is_array($this->taxonomySettings)):
 
@@ -625,7 +625,7 @@
 	     *
 	     * @since  1.0
 	     */
-	    function register_exisiting_taxonomies()
+	    public function register_exisiting_taxonomies()
 	    {
 	        if (is_array($this->existingTaxonomies))
 	            foreach ($this->existingTaxonomies as $taxonomy_name)
@@ -635,14 +635,14 @@
 	    /**
 	     * Add admin columns
 	     *
-	     * Adds columns to the admin edit screen. Function is used with add_action
+	     * Adds columns to the admin edit screen. public function is used with add_action
 	     *
 	     * @since  1.0
 	     * 
 	     * @param array $columns Columns to be added to the admin edit screen.
 	     * @return array
 	     */
-	    function add_admin_columns($columns)
+	    public function add_admin_columns($columns)
 	    {
 	        // If no user columns have been specified, add taxonomies
 	        if (!isset($this->columns)):
@@ -711,7 +711,7 @@
 	     * @param string $column The name of the column.
 	     * @param integer $post_id The post ID.
 	     */
-	    function populate_admin_columns($column, $post_id)
+	    public function populate_admin_columns($column, $post_id)
 	    {
 	        // Get wordpress $post object.
 	        global $post;
@@ -797,16 +797,16 @@
 	                endif;
 		            break;
 
-	            // Default case checks if the column has a user function, this is most commonly used for custom fields.
+	            // Default case checks if the column has a user public function, this is most commonly used for custom fields.
 	            default:
 
 	                // If there are user custom columns to populate.
 	                if (isset($this->custom_populate_columns) && is_array($this->custom_populate_columns))
 
-	                    // If this column has a user submitted function to run.
+	                    // If this column has a user submitted public function to run.
 	                    if (isset($this->custom_populate_columns[$column]) && is_callable($this->custom_populate_columns[$column]))
 
-	                        // Run the function.
+	                        // Run the public function.
 	                        call_user_func_array($this->custom_populate_columns[$column], array($column, $post));
 		            break;
 	        endswitch; // end switch ($column)
@@ -815,13 +815,13 @@
 	    /**
 	     * Filters
 	     *
-	     * User function to define which taxonomy filters to display on the admin page.
+	     * User public function to define which taxonomy filters to display on the admin page.
 	     *
 	     * @since  1.0
 	     * 
 	     * @param array $filters An array of taxonomy filters to display.
 	     */
-	    function filters($filters = array())
+	    public function filters($filters = array())
 	    {
 	        $this->filters = $filters;
 	    }
@@ -833,7 +833,7 @@
 	     *
 	     * @since  1.0
 	    */
-	    function add_taxonomy_filters()
+	    public function add_taxonomy_filters()
 	    {
 	        global $typenow;
 	        global $wp_query;
@@ -905,7 +905,7 @@
 	     * 
 	     * @param array $columns An array of columns to be displayed.
 	     */
-	    function columns($columns)
+	    public function columns($columns)
 	    {
 	        // If columns is set.
 	        if (isset($columns))
@@ -922,9 +922,9 @@
 	     * @since  1.0
 	     * 
 	     * @param string $column_name The name of the column to populate.
-	     * @param mixed $callback An anonyous function or callable array to call when populating the column.
+	     * @param mixed $callback An anonyous public function or callable array to call when populating the column.
 	     */
-	    function populate_column($column_name, $callback)
+	    public function populate_column($column_name, $callback)
 	    {
 	        $this->custom_populate_columns[$column_name] = $callback;
 	    }
@@ -938,7 +938,7 @@
 	     * 
 	     * @param array $columns An array of columns that are sortable.
 	     */
-	    function sortable($columns = array())
+	    public function sortable($columns = array())
 	    {
 	        // Assign user defined sortable columns to object variable.
 	        $this->sortable = $columns;
@@ -953,14 +953,14 @@
 	    /**
 	     * Make columns sortable
 	     *
-	     * Internal function that adds user defined sortable columns to WordPress default columns.
+	     * Internal public function that adds user defined sortable columns to WordPress default columns.
 	     *
 	     * @since  1.0
 	     * 
 	     * @param array $columns Columns to be sortable.
 	     *
 	     */
-	    function make_columns_sortable($columns)
+	    public function make_columns_sortable($columns)
 	    {
 	        // For each sortable column.
 	        foreach ($this->sortable as $column => $values):
@@ -984,7 +984,7 @@
 	     *
 	     * @since  1.0
 	     */
-	    function load_edit()
+	    public function load_edit()
 	    {
 	        // Run filter to sort columns when requested
 	        $this->add_filter('request', array(&$this, 'sort_columns'));
@@ -993,7 +993,7 @@
 	    /**
 	     * Sort columns
 	     *
-	     * Internal function that sorts columns on request.
+	     * Internal public function that sorts columns on request.
 	     *
 	     * @see load_edit()
 	     *
@@ -1002,7 +1002,7 @@
 	     * @param array $vars The query vars submitted by user.
 	     * @return array A sorted array.
 	     */
-	    function sort_columns($vars)
+	    public function sort_columns($vars)
 	    {
 	        // Cycle through all sortable columns submitted by the user
 	        foreach ($this->sortable as $column => $values):
@@ -1058,14 +1058,14 @@
 	    /**
 	     * Set menu icon
 	     *
-	     * Use this function to set the menu icon in the admin dashboard. Since WordPress v3.8
+	     * Use this public function to set the menu icon in the admin dashboard. Since WordPress v3.8
 	     * dashicons are used. For more information see @link http://melchoyce.github.io/dashicons/
 	     *
 	     * @since  1.0
 	     * 
 	     * @param string $icon dashicon name
 	     */
-	    function menu_icon($icon = "dashicons-admin-page")
+	    public function menu_icon($icon = "dashicons-admin-page")
 	    {
 	        if (is_string($icon) && stripos($icon, "dashicons") !== false)
 		            $this->options["menu_icon"] = $icon;
@@ -1081,7 +1081,7 @@
 	     * 
 	     * @param string $textdomain Textdomain used for translation.
 	     */
-	    function set_textdomain($textdomain)
+	    public function set_textdomain($textdomain)
 	    {
 	        $this->textdomain = $textdomain;
 	    }
@@ -1089,13 +1089,13 @@
 	    /**
 	     * Updated messages
 	     *
-	     * Internal function that modifies the post type names in updated messages
+	     * Internal public function that modifies the post type names in updated messages
 	     *
 	     * @since  1.0
 	     * 
 	     * @param array $messages an array of post updated messages
 	     */
-	    function updated_messages($messages)
+	    public function updated_messages($messages)
 	    {
 	        $post = get_post();
 	        $singular = $this->singular;
@@ -1124,13 +1124,13 @@
 	    /**
 	     * Bulk updated messages
 	     *
-	     * Internal function that modifies the post type names in bulk updated messages
+	     * Internal public function that modifies the post type names in bulk updated messages
 	     *
 	     * @since  1.0
 	     * 
 	     * @param array $messages an array of bulk updated messages
 	     */
-	    function bulk_updated_messages($bulk_messages, $bulk_counts)
+	    public function bulk_updated_messages($bulk_messages, $bulk_counts)
 	    {
 	        $singular = $this->singular;
 	        $plural = $this->plural;
@@ -1153,7 +1153,7 @@
 	     *
 	     * @since  1.0
 	     */
-	    function flush()
+	    public function flush()
 	    {
 	        flush_rewrite_rules();
 	    }
