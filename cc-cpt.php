@@ -452,9 +452,29 @@
 
 	        // Default options.
 	        $defaults = array(
-	            'labels'		=> $labels,
-	            'public' 		=> true,
-	            'rewrite'		=> array(
+	            'labels'				=> $labels,
+	            'hierarchical'        	=> false,
+				'description'         	=> 'description',
+				'taxonomies'          	=> array(),
+				'public'              	=> true,
+				'show_ui'             	=> true,
+				'show_in_menu'        	=> true,
+				'show_in_admin_bar'   	=> true,
+				'menu_position'       	=> null,
+				'menu_icon'           	=> null,
+				'show_in_nav_menus'   	=> true,
+				'publicly_queryable'  	=> true,
+				'exclude_from_search' 	=> false,
+				'has_archive'         	=> true,
+				'query_var'           	=> true,
+				'can_export'          	=> true,
+				'capability_type'     	=> 'post',
+				'supports'            	=> array(
+					'title', 'editor', 'author', 'thumbnail',
+					'excerpt','custom-fields', 'trackbacks', 'comments',
+					'revisions', 'page-attributes', 'post-formats'
+				),
+	            'rewrite'				=> array(
 	            	'slug' 			=> $slug,
 	            	'with_front'	=> false,
 	            ),
