@@ -17,9 +17,9 @@
 	     *
 	     * @since  1.0
 	     *
-	     * @var string $postTypeName Holds the name of the post type.
+	     * @var string $post_type_name Holds the name of the post type.
 	     */
-	    public $postTypeName;
+	    public $post_type_name;
 
 	    /**
 	     * Holds the singular name of the post type. This is a human friendly
@@ -75,18 +75,17 @@
 	     *
 	     * @since  1.0
 	     * 
-	     * @var array $taxonomySettings Holds the taxonomy settings.
+	     * @var array $taxonomy_settings Holds the taxonomy settings.
 	     */
-	    public $taxonomySettings;
-
+	    public $taxonomy_settings;
 	    /**
 	     * Exisiting taxonomies to be registered after the posty has been registered
 	     *
 	     * @since  1.0
 	     * 
-	     * @var array $existingTaxonomies holds exisiting taxonomies
+	     * @var array $existing_taxonomies holds exisiting taxonomies
 	     */
-	    public $existingTaxonomies;
+	    public $existing_taxonomies;
 
 	    /**
 	     * Taxonomy filters. Defines which filters are to appear on admin edit
@@ -142,13 +141,13 @@
 	     *
 	     * @since  1.0
 	     * 
-	     * @param mixed $postTypeNames The name(s) of the post type, accepts (post type name, slug, plural, singular).
+	     * @param mixed $post_type_names The name(s) of the post type, accepts (post type name, slug, plural, singular).
 	     * @param array $options User submitted options.
 	     */
-	    public function __construct($postTypeNames, $options = array())
+	    public function __construct($post_type_names, $options = array())
 	    {
 			// Check if post type names is a string or an array.
-	        if (is_array($postTypeNames)):
+	        if (is_array($post_type_names)):
 	            
 		            // Add names to object.
 		            $names = array(
@@ -158,16 +157,16 @@
 		            );
 
 		            // Set the post type name.
-		            $this->postTypeName = $postTypeNames['post_type_name'];
+		            $this->post_type_name = $post_type_names['post_type_name'];
 
 		            // Cycle through possible names.
 		            foreach ($names as $name):
 
 		                // If the name has been set by user.
-		                if (isset($postTypeNames[$name])):
+		                if (isset($post_type_names[$name])):
 
 								// Use the user setting
-								$this->$name = $postTypeNames[$name];
+								$this->$name = $post_type_names[$name];
 
 			                // Else generate the name.
 			                else:
@@ -184,7 +183,7 @@
 		        else:
 
 		            // Apply to post type name.
-		            $this->postTypeName = $postTypeNames;
+		            $this->post_type_name = $post_type_names;
 
 		            // Set the slug name.
 		            $this->slug = $this->get_slug();
@@ -212,10 +211,10 @@
 	        $this->add_action('init', array(&$this, 'register_exisiting_taxonomies'));
 
 	        // Add taxonomy to admin edit columns.
-	        $this->add_filter('manage_edit-' . $this->postTypeName.'_columns', array(&$this, 'add_admin_columns'));
+	        $this->add_filter('manage_edit-' . $this->post_type_name.'_columns', array(&$this, 'add_admin_columns'));
 
 	        // Populate the taxonomy columns with the posts terms.
-	        $this->add_action('manage_' . $this->postTypeName.'_posts_custom_column', array(&$this, 'populate_admin_columns'), 10, 2);
+	        $this->add_action('manage_' . $this->post_type_name.'_posts_custom_column', array(&$this, 'populate_admin_columns'), 10, 2);
 
 	        // Add filter select option to admin edit.
 	        $this->add_action('restrict_manage_posts', array(&$this, 'add_taxonomy_filters'));
@@ -332,7 +331,7 @@
 	    {
 	        // If no name set use the post type name.
 	        if (!isset($name))
-	            $name = $this->postTypeName;
+	            $name = $this->post_type_name;
 	        
 	        // Name to lower case.
 	        $name = strtolower($name);
@@ -364,7 +363,7 @@
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
-	            $name = $this->postTypeName;
+	            $name = $this->post_type_name;
 	        
 	        // Return the plural name. Add 's' to the end.
 	        return $this->get_human_friendly($name) . 's';
@@ -388,7 +387,7 @@
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
-	            $name = $this->postTypeName;
+	            $name = $this->post_type_name;
 
 	        // Return the string.
 	        return $this->get_human_friendly($name);
@@ -412,7 +411,7 @@
 	    {
 	        // If no name is passed the post_type_name is used.
 	        if (!isset($name))
-	            $name = $this->postTypeName;
+	            $name = $this->post_type_name;
 
 	        // Return human friendly name.
 	        return ucwords(strtolower(str_replace("-", " ", str_replace("_", " ", $name))));
@@ -487,10 +486,10 @@
 	        $this->options = $options;
 
 	        // Check that the post type doesn't already exist.
-	        if (!post_type_exists($this->postTypeName))
+	        if (!post_type_exists($this->post_type_name))
 	
 	            // Register the post type.
-	            register_post_type($this->postTypeName, $options);
+	            register_post_type($this->post_type_name, $options);
 	    }
 
 	    /**
@@ -503,16 +502,16 @@
 	    public function dashboad_glance()
 	    {
 	    	// get number of published posts
-	    	$numberOfPosts = number_format_i18n(wp_count_posts($this->postTypeName)->publish);
+	    	$numberOfPosts = number_format_i18n(wp_count_posts($this->post_type_name)->publish);
 
 			// render CPT number
-			echo '<li class="post-count"><a href="edit.php?post_type='.$this->postTypeName.'">'.$numberOfPosts.' '._n($this->singular, $this->plural, intval($numberOfPosts), $this->textdomain).'</a></li>';
+			echo '<li class="post-count"><a href="edit.php?post_type='.$this->post_type_name.'">'.$numberOfPosts.' '._n($this->singular, $this->plural, intval($numberOfPosts), $this->textdomain).'</a></li>';
 	    }
 
 	    /**
 	     * Register taxonomy
 	     *
-	     * @see http://codex.wordpress.org/public function_Reference/register_taxonomy
+	     * @see https://codex.wordpress.org/Function_Reference/register_taxonomy
 	     *
 	     * @since  1.0
 	     * 
@@ -522,7 +521,7 @@
 	    public function register_taxonomy($taxonomy_names, $options = array())
 	    {
 	        // Post type defaults to $this post type if unspecified.
-	        $post_type = $this->postTypeName;
+	        $post_type = $this->post_type_name;
 
 	        // An array of the names required excluding taxonomy_name.
 	        $names = array(
@@ -604,7 +603,7 @@
 	        $this->taxonomies[] = $taxonomy_name;
 
 	        // Create array used when registering taxonomies.
-	        $this->taxonomySettings[$taxonomy_name] = $options;
+	        $this->taxonomy_settings[$taxonomy_name] = $options;
 	    }
 
 
@@ -618,21 +617,21 @@
 	     */
 	    public function register_taxonomies()
 	    {
-	        if (is_array($this->taxonomySettings)):
+	        if (is_array($this->taxonomy_settings)):
 
 	            // Foreach taxonomy registered with the post type.
-	            foreach ($this->taxonomySettings as $taxonomy_name => $options):
+	            foreach ($this->taxonomy_settings as $taxonomy_name => $options):
 
 	                // Register the taxonomy if it doesn't exist.
 	                if (!taxonomy_exists($taxonomy_name))
 
 		                    // Register the taxonomy with Wordpress
-		                    register_taxonomy($taxonomy_name, $this->postTypeName, $options);
+		                    register_taxonomy($taxonomy_name, $this->post_type_name, $options);
 
 	                	else
 
 		                    // If taxonomy exists, register it later with register_exisiting_taxonomies
-		                    $this->existingTaxonomies[] = $taxonomy_name;
+		                    $this->existing_taxonomies[] = $taxonomy_name;
 
 	            endforeach;
 	        endif;
@@ -647,9 +646,9 @@
 	     */
 	    public function register_exisiting_taxonomies()
 	    {
-	        if (is_array($this->existingTaxonomies))
-	            foreach ($this->existingTaxonomies as $taxonomy_name)
-	                register_taxonomy_for_object_type($taxonomy_name, $this->postTypeName);
+	        if (is_array($this->existing_taxonomies))
+	            foreach ($this->existing_taxonomies as $taxonomy_name)
+	                register_taxonomy_for_object_type($taxonomy_name, $this->post_type_name);
 	    }
 
 	    /**
@@ -670,11 +669,11 @@
 		            $new_columns = array();
 
 		            // determine which column to add custom taxonomies after
-		            if (is_array($this->taxonomies) && in_array('post_tag', $this->taxonomies) || $this->postTypeName === 'post')
+		            if (is_array($this->taxonomies) && in_array('post_tag', $this->taxonomies) || $this->post_type_name === 'post')
 		    	            $after = 'tags';
-		            	elseif (is_array($this->taxonomies) && in_array('category', $this->taxonomies) || $this->postTypeName === 'post')
+		            	elseif (is_array($this->taxonomies) && in_array('category', $this->taxonomies) || $this->post_type_name === 'post')
 		                		$after = 'categories';
-		            		elseif (post_type_supports($this->postTypeName, 'author'))
+		            		elseif (post_type_supports($this->post_type_name, 'author'))
 		                			$after = 'author';
 		            			else
 		 			               $after = 'title';
@@ -859,7 +858,7 @@
 	        global $wp_query;
 
 	        // Must set this to the post type you want the filter(s) displayed on.
-	        if ($typenow == $this->postTypeName):
+	        if ($typenow == $this->post_type_name):
 
 	            // if custom filters are defined use those
 	            if (is_array($this->filters))
@@ -913,7 +912,7 @@
 	                    endif; // if ($terms)
 	                endforeach; // foreach ($filters as $tax_slug)
 	            endif; // if (!empty($filters))
-	        endif; // if ($typenow == $this->postTypeName)
+	        endif; // if ($typenow == $this->post_type_name)
 	    }
 
 	    /**
@@ -964,7 +963,7 @@
 	        $this->sortable = $columns;
 
 	        // Run filter to make columns sortable.
-	        $this->add_filter('manage_edit-'.$this->postTypeName.'_sortable_columns', array(&$this, 'make_columns_sortable'));
+	        $this->add_filter('manage_edit-'.$this->post_type_name.'_sortable_columns', array(&$this, 'make_columns_sortable'));
 
 	        // Run action that sorts columns on request.
 	        $this->add_action('load-edit.php', array(&$this, 'load_edit'));
@@ -1055,7 +1054,7 @@
 		        endif;
 
 	            // Check if we're viewing this post type
-	            if (isset($vars['post_type']) && $this->postTypeName == $vars['post_type']):
+	            if (isset($vars['post_type']) && $this->post_type_name == $vars['post_type']):
 
 	                // find the meta key we want to order posts by
 	                if (isset($vars['orderby']) && $meta_key == $vars['orderby']):
@@ -1120,7 +1119,7 @@
 	        $post = get_post();
 	        $singular = $this->singular;
 
-	        $messages[$this->postTypeName] = array(
+	        $messages[$this->post_type_name] = array(
 	            0 => '',
 	            1 => sprintf(__('%s updated.', $this->textdomain), $singular),
 	            2 => __('Custom field updated.', $this->textdomain),
@@ -1155,7 +1154,7 @@
 	        $singular = $this->singular;
 	        $plural = $this->plural;
 
-	        $bulk_messages[$this->postTypeName] = array(
+	        $bulk_messages[$this->post_type_name] = array(
 	            'updated'   => _n('%s '.$singular.' updated.', '%s '.$plural.' updated.', $bulk_counts['updated']),
 	            'locked'    => _n('%s '.$singular.' not updated, somebody is editing it.', '%s '.$plural.' not updated, somebody is editing them.', $bulk_counts['locked']),
 	            'deleted'   => _n('%s '.$singular.' permanently deleted.', '%s '.$plural.' permanently deleted.', $bulk_counts['deleted']),
