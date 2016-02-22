@@ -7,7 +7,7 @@
 	 *
 	 * @author Corneliu Cirlan
 	 * @link http://www.TwoCSoft.com
-	 * @version 1.0
+	 * @version 1.1
 	 */
 
 	class CC_CPT
@@ -207,6 +207,9 @@
 	        // add dashboard glance item
 	        $this->add_filter('dashboard_glance_items', array(&$this, 'dashboad_glance'));
 
+			// add recent activity
+			add_filter( 'dashboard_recent_posts_query_args', array(&$this, 'dashboard_recent_posts'), 10, 1 );
+	        
 	        // Register exisiting taxonomies.
 	        $this->add_action('init', array(&$this, 'register_exisiting_taxonomies'));
 
@@ -218,11 +221,10 @@
 
 	        // Add filter select option to admin edit.
 	        $this->add_action('restrict_manage_posts', array(&$this, 'add_taxonomy_filters'));
-
-	        // rewrite post update messages
-	        $this->add_filter('post_updated_messages', array(&$this, 'updated_messages'));
-	        $this->add_filter('bulk_post_updated_messages', array(&$this, 'bulk_updated_messages'), 10, 2);
-	    }
+		        // rewrite post update messages
+		        $this->add_filter('post_updated_messages', array(&$this, 'updated_messages'));
+		        $this->add_filter('bulk_post_updated_messages', array(&$this, 'bulk_updated_messages'), 10, 2);
+		}
 
 	    /**
 	     * Get
@@ -507,6 +509,24 @@
 			// render CPT number
 			echo '<li class="post-count"><a href="edit.php?post_type='.$this->post_type_name.'">'.$numberOfPosts.' '._n($this->singular, $this->plural, intval($numberOfPosts), $this->textdomain).'</a></li>';
 	    }
+
+	    		/**
+		 * Recent Activity
+		 *
+		 * @since 1.1
+		 * 
+		 * @param  array $query_args The current arguments array for displaying recent activity
+		 * @return array 			 Modified arguments array to include this post type
+		 */
+		public function dashboard_recent_posts($query_args)
+		{
+			if (!is_array($query_args['post_type']))
+					$query_args['post_type'] = array($query_args['post_type'], $this->post_type_name);
+				else
+					$query_args['post_type'][] = $this->post_type_name;
+		
+			return $query_args;
+		}
 
 	    /**
 	     * Register taxonomy
