@@ -77,6 +77,7 @@
 	     * 
 	     * @var array $taxonomy_settings Holds the taxonomy settings.
 	     */
+
 	    public $taxonomy_settings;
 	    /**
 	     * Exisiting taxonomies to be registered after the posty has been registered
